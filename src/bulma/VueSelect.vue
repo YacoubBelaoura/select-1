@@ -7,7 +7,7 @@
                 hasSelection, query, options, selection, trackBy, currentIndex,
                 i18n, displayLabel, isSelected, highlight, dropdownBindings, dropdownEvents,
                 dropdownTriggerEvents, filterEvents, filterBindings, itemEvents, selectionBindings,
-                selectionEvents, clearEvents, taggableEvents, keyboardEvents,
+                selectionEvents, clearEvents, taggableEvents, keyboardEvents, direction
             }">
             <dropdown class="vue-select"
                 v-bind="dropdownBindings"
@@ -46,9 +46,9 @@
                             <template v-else>
                                 {{ i18n(placeholder) }}
                             </template>
-                            <span class="is-loading"
+                            <span class="is-loading" :class="direction"
                                 v-if="loading"/>
-                            <a class="delete is-small"
+                            <a class="delete is-small" :class="direction"
                                 v-on="clearEvents"
                                 v-if="visibleClearControl"/>
                         </div>
@@ -87,7 +87,7 @@
                                     {{ i18n(labels.select) }}
                                 </span>
                             </span>
-                            <span class="icon is-small selected has-text-success"
+                            <span class="icon is-small selected has-text-success" :class="direction"
                                 v-else-if="isSelected(option)">
                                 <fa icon="check"/>
                             </span>
@@ -97,7 +97,7 @@
                         v-on="taggableEvents"
                         v-if="!hasOptions">
                         {{ i18n(labels.noResults) }}
-                        <span class="label tag is-info"
+                        <span class="label tag is-info" :class="direction"
                             v-if="taggable">
                             {{ i18n(labels.addTag) }}
                         </span>
@@ -196,8 +196,13 @@ export default {
 
                     .delete {
                         position: absolute;
-                        right: 1.5rem;
                         top: 0.55rem;
+                        &.left {
+                            right: 1.5rem;
+                        }
+                        &.right {
+                            left: 1.5rem;
+                        }
                     }
 
                     .is-loading {
@@ -205,7 +210,7 @@ export default {
                         animation: spinAround .5s infinite linear;
                         border: 2px solid #dbdbdb;
                         border-radius: 290486px;
-                        border-right-color: transparent;
+                        /*border-right-color: transparent;*/
                         border-top-color: transparent;
                         content: "";
                         display: block;
@@ -213,9 +218,17 @@ export default {
                         position: relative;
                         width: 1em;
                         position: absolute!important;
-                        right: 1.7rem;
+                        /*right: 1.7rem;*/
                         top: .55em;
                         z-index: 4;
+                        &.left {
+                            border-right-color: transparent;
+                            right: 1.7rem;
+                        }
+                        &.right {
+                            border-left-color: transparent;
+                            left: 1.7rem;
+                        }
                     }
                 }
             }
@@ -253,13 +266,25 @@ export default {
                         padding: 0.3rem;
                         height: 1.3rem;
                         z-index: 1;
-                        right: 0.6rem;
+                        /*right: 0.6rem;*/
+                        &.left {
+                            right: 0.6rem;
+                        }
+                        &.right {
+                            left: 0.6rem;
+                        }
                     }
 
                     .icon.selected {
                         position: absolute;
                         z-index: 1;
-                        right: 0.6rem;
+                        /*right: 0.6rem;*/
+                        &.left {
+                            right: 0.6rem;
+                        }
+                        &.right {
+                            left: 0.6rem;
+                        }
                     }
                 }
             }

@@ -79,6 +79,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        direction: {
+            type: string,
+            default: 'left',
+        },
         value: {
             type: null,
             default: () => (this.multiple ? [] : null),
@@ -361,6 +365,7 @@ export default {
             hasSelection: this.hasSelection,
             selection: this.selection,
             trackBy: this.trackBy,
+            direction: this.direction,
             currentIndex: this.currentIndex,
             i18n: this.i18n,
             displayLabel: this.displayLabel,
