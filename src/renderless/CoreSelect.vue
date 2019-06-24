@@ -86,6 +86,7 @@ export default {
     },
 
     data: v => ({
+        internalValue: null,
         optionList: v.options,
         loading: false,
         query: '',
@@ -151,6 +152,13 @@ export default {
             },
             deep: true,
         },
+        value(value) {
+            if (this.internalValue !== value) {
+                this.$emit('input', value);
+            }
+
+            this.internalValue = null;
+        },
     },
 
     created() {
@@ -195,6 +203,7 @@ export default {
             }
         },
         update(value) {
+            this.internalValue = value;
             this.$emit('input', value);
         },
         updateSelection() {
@@ -243,7 +252,8 @@ export default {
             }
         },
         handleMultipleSelection(option) {
-            const index = this.value.findIndex(val => this.valueMatchesOption(val, option));
+            const index = this.value
+                .findIndex(val => this.valueMatchesOption(val, option));
 
             if (index >= 0) {
                 this.value.splice(index, 1);
@@ -281,9 +291,11 @@ export default {
             this.$emit('clear');
         },
         highlight(label) {
-            return label.replace(
-                new RegExp(`(${this.query})`, 'gi'), '<b>$1</b>',
-            );
+            return (this.query.length > 0)
+                ? label.replace(
+                    new RegExp(`(${this.query})`, 'gi'), '<b>$1</b>',
+                )
+                : label;
         },
         deselect(value) {
             const index = this.value
@@ -353,6 +365,7 @@ export default {
             multiple: this.multiple,
             taggable: this.taggable,
             loading: this.loading,
+            disabled: this.disabled,
             disableClear: this.disableClear,
             visibleClearControl: this.visibleClearControl,
             hasOptions: this.hasFilteredOptions,
@@ -374,7 +387,7 @@ export default {
             dropdownEvents: {
                 close: this.reset,
             },
-            dropdownTriggerEvents: {
+            reloadEvents: {
                 click: () => {
                     if (!this.hasOptions) {
                         this.fetch();
