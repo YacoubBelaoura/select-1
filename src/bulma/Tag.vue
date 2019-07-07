@@ -1,6 +1,7 @@
 <template>
     <div class="vue-select tags has-addons">
-        <span class="tag is-link">
+        <!-- <span class="tag is-link "> -->
+        <span class="tag bg-blue-400 text-white">
             {{ label }}
         </span>
         <a class="tag is-delete"

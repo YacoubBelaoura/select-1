@@ -14,14 +14,15 @@
                 v-on="dropdownEvents"
                 :manual="multiple">
                 <template v-slot:trigger="{ triggerEvents, visible }">
-                    <button class="button input"
+                    <button class="button input focus:shadow-outlineBlue"
                         :class="{ 'has-error': hasError }"
                         type="button"
                         :disabled="disabled"
                         v-on="triggerEvents">
                         <div class="control-display"
                             v-on="reloadEvents">
-                            <div class="field is-grouped is-grouped-multiline"
+                            <!-- <div class="field is-grouped is-grouped-multiline" -->
+                            <div class="field is-grouped is-grouped-multiline flex flex-wrap justify-start"
                                 v-if="hasSelection">
                                 <div class="control">
                                     <slot name="selection"
@@ -57,8 +58,10 @@
                     </button>
                 </template>
                 <template v-slot:controls>
-                    <div class="dropdown-item search">
-                        <input class="input"
+                    <!-- <div class="dropdown-item search"> -->
+                    <div class="dropdown-item search has-text-centered rounded-sm block py-1 px-2
+                                whitespace-no-wrap w-full text-center cursor-pointer no-underline relative hover:bg-white-smoke">
+                        <input class="input focus:shadow-outlineBlue w-full"
                             type="text"
                             :placeholder="i18n(labels.search)"
                             v-bind="filterBindings"
@@ -72,10 +75,14 @@
                         :display-label="displayLabel"
                         :is-selected="isSelected"
                         :highlight="highlight">
-                        <a class="dropdown-item"
+                        <!-- <a class="dropdown-item" -->
+                        <a class="dropdown-item has-text-centered
+                                rounded-sm block py-1 px-2 flex justify-between
+                                whitespace-no-wrap w-full text-center items-center
+                                cursor-pointer no-underline relative hover:bg-white-smoke"
                             v-for="(option, index) in options"
                             :key="option[trackBy]"
-                            :class="{ 'is-active': currentIndex === index }"
+                            :class="{ 'is-active bg-blue-500 hover:bg-blue-400 font-semibold text-white': currentIndex === index }"
                             v-on="itemEvents(index)">
                             <slot name="option"
                                 :option="option"
@@ -83,7 +90,7 @@
                                 <span v-html="highlight(displayLabel(option))"/>
                             </slot>
                             <span class="label tag"
-                                :class="isSelected(option) ? 'is-warning' : 'is-success'"
+                                :class="isSelected(option) ? 'is-warning bg-yellow-400' : 'is-success bg-green-400 text-white'"
                                 v-if="currentIndex === index && !disableClear">
                                 <span v-if="isSelected(option)">
                                     {{ i18n(labels.deselect) }}
@@ -92,18 +99,25 @@
                                     {{ i18n(labels.select) }}
                                 </span>
                             </span>
-                            <span class="icon is-small selected has-text-success"
+                            <!-- <span class="icon is-small selected has-text-success" -->
+                            <span class="icon is-small selected has-text-success text-green-400"
                                 v-else-if="isSelected(option)">
                                 <fa icon="check"/>
                             </span>
                         </a>
                     </slot>
-                    <a class="dropdown-item"
+                    <!-- <a class="dropdown-item rounded-sm block py-1 px-2 flex justify-between -->
+                    <a class="dropdown-item rounded-sm block py-1 px-2 flex justify-between
+                                whitespace-no-wrap w-full text-center items-center
+                                cursor-pointer no-underline relative hover:bg-white-smoke"
                         v-on="taggableEvents"
                         v-if="!hasOptions">
+                        <!-- v-if="!hasOptions"> -->
                         {{ i18n(labels.noResults) }}
-                        <span class="label tag is-info"
+                        <!-- <span class="label tag is-info" -->
+                        <span class="label tag is-info text-white bg-blue-400"
                             v-if="taggable">
+                            <!-- v-if="taggable"> -->
                             {{ i18n(labels.addTag) }}
                         </span>
                     </a>
